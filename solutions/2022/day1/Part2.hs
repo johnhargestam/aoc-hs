@@ -1,11 +1,14 @@
 {-# OPTIONS_GHC -Wall #-}
 
-module Part2 where
+import Day (solve, calorieSums)
+import Data.List (sortBy)
+import Utils (descending)
 
-import Day (solve)
+top :: Ord a => Int -> [a] -> [a]
+top n = take n . sortBy descending 
 
 solution :: String -> String
-solution txt = txt
+solution = show . sum . top 3 . calorieSums
 
 main :: IO ()
 main = solve solution

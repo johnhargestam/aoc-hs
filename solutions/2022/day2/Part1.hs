@@ -27,4 +27,4 @@ solution :: String -> String
 solution = show . sum . map score . matches . lines
 
 main :: IO ()
-main = solve solution
+main = apply solution

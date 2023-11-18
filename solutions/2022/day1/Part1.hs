@@ -6,4 +6,4 @@ solution :: String -> String
 solution = show . maximum . calorieSums
 
 main :: IO ()
-main = solve solution
+main = apply solution

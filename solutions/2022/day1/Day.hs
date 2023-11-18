@@ -7,8 +7,8 @@ import Data.Maybe
 import Text.Read (readMaybe)
 import Utils (split)
 
-solve :: (String -> String) -> IO ()
-solve = evaluate "solutions/2022/day1/input"
+apply :: (String -> String) -> IO ()
+apply = evaluate "solutions/2022/day1/input"
 
 verify :: (String -> String) -> IO ()
 verify = evaluate "solutions/2022/day1/sample"

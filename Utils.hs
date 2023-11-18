@@ -28,3 +28,9 @@ trim = dropWhile isSpace . dropWhileEnd isSpace
 singleMaybe :: [a] -> Maybe a
 singleMaybe [x] = Just x
 singleMaybe  _  = Nothing
+
+chunksOf :: Int -> [a] -> [[a]]
+chunksOf _ []         = []
+chunksOf n xs
+     | length xs >= n = take n xs : chunksOf n (drop n xs)
+     | otherwise      = [xs]

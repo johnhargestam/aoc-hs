@@ -11,4 +11,4 @@ solution :: String -> String
 solution = show . sum . top 3 . calorieSums
 
 main :: IO ()
-main = solve solution
+main = apply solution

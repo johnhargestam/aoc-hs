@@ -6,4 +6,4 @@ solution :: String -> String
 solution txt = txt
 
 main :: IO ()
-main = solve solution
+main = apply solution

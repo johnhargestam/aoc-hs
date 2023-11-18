@@ -4,8 +4,8 @@ module Day where
 
 import Aoc (evaluate)
 
-solve :: (String -> String) -> IO ()
-solve = evaluate "template/input"
+apply :: (String -> String) -> IO ()
+apply = evaluate "template/input"
 
 verify :: (String -> String) -> IO ()
 verify = evaluate "template/sample"

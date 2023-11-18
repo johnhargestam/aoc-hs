@@ -12,11 +12,11 @@ findTailIndex f ys = findIndex f (tails ys)
 findListIndex :: Eq a => [a] -> [a] -> Maybe Int
 findListIndex xs = findTailIndex (xs `isPrefixOf`)
 
-split :: Eq a => [a] -> [a] -> [[a]]
-split _  [] = []
-split [] xs = [xs]
-split ms xs = splitIndex (findListIndex ms xs)
-  where splitIndex (Just i) = take i xs : split ms (drop (i + length ms) xs)
+splitEq :: Eq a => [a] -> [a] -> [[a]]
+splitEq _  [] = []
+splitEq [] xs = [xs]
+splitEq ms xs = splitIndex (findListIndex ms xs)
+  where splitIndex (Just i) = take i xs : splitEq ms (drop (i + length ms) xs)
         splitIndex Nothing  = [xs]
 
 descending :: Ord a => a -> a -> Ordering

@@ -1,6 +1,6 @@
 {-# OPTIONS_GHC -Wall #-}
 
-import Day (solve)
+import Day
 
 solution :: String -> String
 solution txt = txt

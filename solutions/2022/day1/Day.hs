@@ -10,6 +10,9 @@ import Utils (split)
 solve :: (String -> String) -> IO ()
 solve = evaluate "solutions/2022/day1/input"
 
+verify :: (String -> String) -> IO ()
+verify = evaluate "solutions/2022/day1/sample"
+
 calories :: String -> [Int]
 calories = mapMaybe readMaybe . lines
 

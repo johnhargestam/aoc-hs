@@ -1,6 +1,6 @@
 {-# OPTIONS_GHC -Wall #-}
 
-import Day (solve, calorieSums)
+import Day
 import Data.List (sortBy)
 import Utils (descending)
 

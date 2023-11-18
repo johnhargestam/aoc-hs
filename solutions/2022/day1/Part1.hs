@@ -1,6 +1,6 @@
 {-# OPTIONS_GHC -Wall #-}
 
-import Day (solve, calorieSums)
+import Day
 
 solution :: String -> String
 solution = show . maximum . calorieSums

@@ -2,4 +2,4 @@
 
 dir=./solutions/$1/day$2
 
-ghc $dir/Part$3.hs -no-keep-hi-files -no-keep-o-files -i$dir
+ghc $dir/part$3.hs -no-keep-hi-files -no-keep-o-files -i$dir

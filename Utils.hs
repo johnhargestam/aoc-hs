@@ -24,3 +24,7 @@ descending = comparing Down
 
 trim :: String -> String
 trim = dropWhile isSpace . dropWhileEnd isSpace
+
+singleMaybe :: [a] -> Maybe a
+singleMaybe [x] = Just x
+singleMaybe  _  = Nothing

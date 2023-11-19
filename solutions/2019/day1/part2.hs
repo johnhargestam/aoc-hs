@@ -2,8 +2,11 @@
 
 import Day
 
+fuelOfFuel :: Int -> Int
+fuelOfFuel = sum . takeWhile (>0) . drop 1 . iterate fuel
+
 solution :: String -> String
-solution txt = txt
+solution = show . sum . map (fuelOfFuel . read) . lines
 
 main :: IO ()
 main = apply solution

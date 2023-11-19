@@ -53,13 +53,13 @@ move fr to s = move' (index s fr)
         move' _     = error $ printf "illegal move from %s to %s" (show (fr+1)) (show (to+1))
 
 moveN :: Move -> Stacks -> Stacks
-moveN (Move n fr to) = last . take n . iterate' (move (fr-1) (to-1))
+moveN (Move n fr to) = last . take n . drop 1 . iterate (move (fr-1) (to-1))
 
 moveN2 :: Move -> Stacks -> Stacks
 moveN2 (Move n fr to) s = iterate (move (fr-1) (to-1)) s !! n
 
 rearrange :: Stacks -> [Move] -> Stacks
-rearrange = foldr moveN2
+rearrange = foldr moveN
 
 topCrates :: Stacks -> [Char]
 topCrates = map head . toList

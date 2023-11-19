@@ -9,3 +9,6 @@ apply = evaluate "solutions/2019/day1/input"
 
 verify :: (String -> String) -> IO ()
 verify = evaluate "solutions/2019/day1/sample"
+
+fuel :: Int -> Int
+fuel x = x `div` 3 - 2

@@ -1,7 +1,7 @@
 {-# OPTIONS_GHC -Wall #-}
 
 import Day
-import Utils (singleMaybe)
+import Utils.List (singleMaybe)
 import Data.Set (intersection, fromList, toList)
 import Data.Maybe (mapMaybe)
 

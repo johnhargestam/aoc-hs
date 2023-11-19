@@ -2,7 +2,7 @@
 
 import Day
 import Data.List (sortBy)
-import Utils (descending)
+import Utils.List (descending)
 
 top :: Ord a => Int -> [a] -> [a]
 top n = take n . sortBy descending 

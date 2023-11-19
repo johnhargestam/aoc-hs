@@ -1,13 +1,13 @@
 {-# OPTIONS_GHC -Wall #-}
 
 import Day
-import Utils (chunksOf, singleMaybe)
-import Data.Set (intersection, fromList, toList, empty, Set)
+import Utils.List (chunksOf, singleMaybe)
+import Data.Set (intersection, fromList, toList, Set)
 import Data.Maybe (mapMaybe)
 
+
 allInChunk :: Ord a => [Set a] -> Set a
-allInChunk (x : xs) = foldr intersection x xs
-allInChunk []       = empty
+allInChunk = foldr1 intersection
 
 singleInChunk :: Ord a => [[a]] -> Maybe a
 singleInChunk = singleMaybe . toList . allInChunk . map fromList

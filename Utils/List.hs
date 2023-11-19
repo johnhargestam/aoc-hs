@@ -1,10 +1,9 @@
 {-# OPTIONS_GHC -Wall #-}
 
-module Utils where
+module Utils.List where
 
-import Data.List (tails, findIndex, isPrefixOf, dropWhileEnd)
+import Data.List (tails, findIndex, isPrefixOf)
 import Data.Ord
-import Data.Char (isSpace)
 
 findTailIndex :: ([a] -> Bool) -> [a] -> Maybe Int
 findTailIndex f ys = findIndex f (tails ys)
@@ -22,9 +21,6 @@ splitEq ms xs = splitIndex (findListIndex ms xs)
 descending :: Ord a => a -> a -> Ordering
 descending = comparing Down
 
-trim :: String -> String
-trim = dropWhile isSpace . dropWhileEnd isSpace
-
 singleMaybe :: [a] -> Maybe a
 singleMaybe [x] = Just x
 singleMaybe  _  = Nothing
@@ -34,3 +30,6 @@ chunksOf _ []         = []
 chunksOf n xs
      | length xs >= n = take n xs : chunksOf n (drop n xs)
      | otherwise      = [xs]
+
+sieve :: Int -> [b] -> [b]
+sieve n = map head . takeWhile (not . null) . iterate (drop n)

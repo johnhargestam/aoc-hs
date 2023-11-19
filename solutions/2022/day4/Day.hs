@@ -3,7 +3,7 @@
 module Day where
 
 import Aoc (evaluate)
-import Utils (splitEq)
+import Utils.List (splitEq)
 import Text.Read (readMaybe)
 import Data.Maybe (mapMaybe)
 

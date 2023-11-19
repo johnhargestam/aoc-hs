@@ -5,7 +5,7 @@ module Day where
 import Aoc (evaluate)
 import Data.Maybe
 import Text.Read (readMaybe)
-import Utils (splitEq)
+import Utils.List (splitEq)
 
 apply :: (String -> String) -> IO ()
 apply = evaluate "solutions/2022/day1/input"

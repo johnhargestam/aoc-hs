@@ -2,7 +2,7 @@
 
 module Aoc where
   
-import Utils (trim)
+import Utils.String (trimEnd)
 
 evaluate :: String -> (String -> String) -> IO ()
-evaluate path sln = readFile path >>= putStrLn . sln . trim
+evaluate path sln = readFile path >>= putStrLn . sln . trimEnd

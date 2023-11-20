@@ -33,3 +33,7 @@ chunksOf n xs
 
 sieve :: Int -> [b] -> [b]
 sieve n = map head . takeWhile (not . null) . iterate (drop n)
+
+replace :: Int -> a -> [a] -> [a]
+replace i x xs = ys ++ [x] ++ drop 1 zs
+  where (ys,zs) = splitAt i xs

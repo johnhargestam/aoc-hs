@@ -37,3 +37,6 @@ sieve n = map head . takeWhile (not . null) . iterate (drop n)
 replace :: Int -> a -> [a] -> [a]
 replace i x xs = ys ++ [x] ++ drop 1 zs
   where (ys,zs) = splitAt i xs
+
+mapAdjacent :: (a -> a -> b) -> [a] -> [b]
+mapAdjacent f xs = zipWith f xs (tail xs)

@@ -2,8 +2,9 @@
 
 module Utils.List where
 
-import Data.List (tails, findIndex, isPrefixOf)
+import Data.List (tails, findIndex, isPrefixOf, find)
 import Data.Ord
+import Data.Maybe (fromMaybe)
 
 findTailIndex :: ([a] -> Bool) -> [a] -> Maybe Int
 findTailIndex f ys = findIndex f (tails ys)
@@ -40,3 +41,10 @@ replace i x xs = ys ++ [x] ++ drop 1 zs
 
 mapAdjacent :: (a -> a -> b) -> [a] -> [b]
 mapAdjacent f xs = zipWith f xs (tail xs)
+
+findWithDefault :: a -> (a -> Bool) -> [a] -> a
+findWithDefault x p = fromMaybe x . find p
+
+lastMaybe :: [a] -> Maybe a
+lastMaybe [] = Nothing
+lastMaybe xs = Just $ last xs

@@ -14,9 +14,9 @@ verify :: (String -> String) -> IO ()
 verify = evaluate "solutions/2019/day6/sample"
 
 readKeyValue :: String -> (String, [String])
-readKeyValue = tupled . splitEq ")"
-  where tupled [x,y] = (x, [y])
-        tupled _     = undefined
+readKeyValue = keyValue . splitEq ")"
+  where keyValue [x,y] = (x, [y])
+        keyValue _     = undefined
 
 toKeyValues :: [String] -> [(String, [String])]
 toKeyValues = map readKeyValue

@@ -48,3 +48,6 @@ findWithDefault x p = fromMaybe x . find p
 lastMaybe :: [a] -> Maybe a
 lastMaybe [] = Nothing
 lastMaybe xs = Just $ last xs
+
+mapWithIndex :: (Int -> a -> b) -> [a] -> [b]
+mapWithIndex f = zipWith f [0..]

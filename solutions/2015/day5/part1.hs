@@ -2,7 +2,6 @@
 
 import Day
 import Data.List (isInfixOf, group)
-import Control.Monad (ap)
 
 isWovel :: Char -> Bool
 isWovel c = c `elem` "aeiou"

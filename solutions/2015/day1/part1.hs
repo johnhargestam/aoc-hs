@@ -2,11 +2,6 @@
 
 import Day
 
-go :: Char -> Int -> Int
-go '(' n = n + 1
-go ')' n = n - 1
-go _   _ = undefined
-
 elevate :: [Char] -> Int
 elevate = foldr go 0
 

@@ -3,7 +3,7 @@
 import Day
 
 solution :: String -> String
-solution txt = txt
+solution = show . length . say 50
 
 main :: IO ()
 main = apply solution

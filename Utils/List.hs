@@ -15,9 +15,9 @@ findListIndex xs = findTailIndex (xs `isPrefixOf`)
 splitEq :: Eq a => [a] -> [a] -> [[a]]
 splitEq _  [] = []
 splitEq [] xs = [xs]
-splitEq ms xs = splitIndex (findListIndex ms xs)
-  where splitIndex (Just i) = take i xs : splitEq ms (drop (i + length ms) xs)
-        splitIndex Nothing  = [xs]
+splitEq ms xs = case findListIndex ms xs of
+  (Just i) -> take i xs : splitEq ms (drop (i + length ms) xs)
+  Nothing -> [xs]
 
 descending :: Ord a => a -> a -> Ordering
 descending = comparing Down

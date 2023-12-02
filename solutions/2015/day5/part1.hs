@@ -2,6 +2,7 @@
 
 import Day
 import Data.List (isInfixOf, group)
+import Utils.Bool ((&&&))
 
 isWovel :: Char -> Bool
 isWovel c = c `elem` "aeiou"
@@ -17,7 +18,7 @@ notForbidden s = not $ any (`isInfixOf` s) forbidden
   where forbidden = ["ab", "cd", "pq", "xy"]
 
 isNice :: String -> Bool
-isNice x = all (\f -> f x) [has3Vowels, hasDoubleLetter, notForbidden]
+isNice = has3Vowels &&& hasDoubleLetter &&& notForbidden
 
 solution :: String -> String
 solution = show . length . filter isNice . lines

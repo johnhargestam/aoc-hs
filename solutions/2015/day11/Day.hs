@@ -5,6 +5,7 @@ module Day where
 import Aoc (evaluate)
 import Data.Char (chr, ord)
 import Data.List (group)
+import Utils.Bool ((&&&))
 
 apply :: (String -> String) -> IO ()
 apply = evaluate "solutions/2015/day11/input"
@@ -26,7 +27,7 @@ hasPairs :: String -> Bool
 hasPairs = (>1) . length . filter ((>1) . length) . group
 
 isValid :: String -> Bool
-isValid x = all (\f -> f x) [hasIncreasing, isReadable, hasPairs]
+isValid = hasIncreasing &&& isReadable &&& hasPairs
 
 letters :: Int -> String
 letters = reverse . lettersRev

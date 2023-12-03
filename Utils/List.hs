@@ -40,7 +40,7 @@ replace i x xs = ys ++ [x] ++ drop 1 zs
   where (ys,zs) = splitAt i xs
 
 mapAdjacent :: (a -> a -> b) -> [a] -> [b]
-mapAdjacent f xs = zipWith f xs (tail xs)
+mapAdjacent f xs = zipWith f xs $ tail xs
 
 findWithDefault :: a -> (a -> Bool) -> [a] -> a
 findWithDefault x p = fromMaybe x . find p

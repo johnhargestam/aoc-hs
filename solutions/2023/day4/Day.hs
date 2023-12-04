@@ -3,8 +3,7 @@
 module Day where
 
 import Aoc (evaluate)
-import Data.Bifunctor (Bifunctor(bimap))
-import Data.Maybe (mapMaybe)
+import Utils.Parser
 
 apply :: (String -> String) -> IO ()
 apply = evaluate "solutions/2023/day4/input"
@@ -12,25 +11,22 @@ apply = evaluate "solutions/2023/day4/input"
 verify :: (String -> String) -> IO ()
 verify = evaluate "solutions/2023/day4/sample"
 
-data Card = Card Int [Int] [Int]
+data Card = Card Int [Int] [Int] deriving Show
 
-instance Show Card where
-  show (Card n _ _) = "Card " ++ show n
-
-readInt :: String -> Maybe Int
-readInt s | [(n,_)] <- reads s = Just n
-          | otherwise          = Nothing
-
-readId :: String -> Int
-readId = read . last . words
-
-readNumbers :: String -> ([Int], [Int])
-readNumbers = bimap numbers numbers . break (== '|')
-  where numbers = mapMaybe readInt . words
-
-readCard :: String -> Card
-readCard = toCard . bimap readId readNumbers . break (== ':')
-  where toCard (i, (xs, ys)) = Card i xs ys
+card :: ReadP Card
+card = do
+  _ <- string "Card"
+  skipSpaces
+  n <- read <$> many1 digit
+  _ <- char ':'
+  skipSpaces
+  xs <- map read <$> sepBy (many1 digit) (many1 space)
+  skipSpaces
+  _ <- char '|'
+  skipSpaces
+  ys <- map read <$> sepBy (many1 digit) (many1 space)
+  eof
+  return (Card n xs ys)
 
 wins :: Card -> Int
 wins (Card _ xs ys) = length $ filter (`elem` xs) ys

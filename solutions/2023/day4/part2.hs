@@ -2,6 +2,7 @@
 
 import Day
 import Data.List (tails)
+import Utils.Parser (parse)
 
 scratch1 :: [Int] -> Int
 scratch1 []     = 0
@@ -16,7 +17,7 @@ scratchOriginal :: [Int] -> Int
 scratchOriginal ws = scratchN (length ws) ws
 
 solution :: String -> String
-solution = show . scratchOriginal . map (wins . readCard) . lines
+solution = show . scratchOriginal . map (wins . parse card) . lines
 
 main :: IO ()
 main = apply solution

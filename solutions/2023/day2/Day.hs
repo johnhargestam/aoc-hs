@@ -4,7 +4,8 @@ module Day where
 
 import Aoc (evaluate)
 import Data.List (find)
-import Utils.Parser
+import Text.Parsec.String (Parser)
+import Text.Parsec (many1, digit, spaces, letter, sepBy1, string, eof)
 
 apply :: (String -> String) -> IO ()
 apply = evaluate "solutions/2023/day2/input"
@@ -16,25 +17,25 @@ data Round = Round { red :: Int, green :: Int, blue :: Int } deriving Show
 
 data Game = Game { gameId :: Int, rounds :: [Round] } deriving Show
 
-colorAmountP :: ReadP (Int, String)
+colorAmountP :: Parser (Int, String)
 colorAmountP = do
-  n <- read <$> many1 digit
-  skipSpaces
+  n <- many1 digit
+  spaces
   clr <- many1 letter
-  return (n, clr)
+  return (read n, clr)
 
 colorAmount :: String -> [(Int, String)] -> Int
 colorAmount clr = maybe 0 fst . find isColor
   where isColor = (== clr) . snd
 
-roundP :: ReadP Round
+roundP :: Parser Round
 roundP = do
   colors <- sepBy1 colorAmountP (string ", ")
   return Round { red   = colorAmount "red" colors,
                  green = colorAmount "green" colors,
                  blue  = colorAmount "blue" colors }
 
-gameP :: ReadP Game
+gameP :: Parser Game
 gameP = do
   _ <- string "Game "
   i <- read <$> many1 digit

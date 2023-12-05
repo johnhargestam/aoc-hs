@@ -4,8 +4,9 @@ module Day where
 
 import Aoc (evaluate)
 import Text.Parsec.String (Parser)
-import Text.Parsec (many1, spaces, sepBy, string, eof, endBy)
-import Text.Parsec.Char (char, digit, space)
+import Text.Parsec (spaces, sepBy, string, eof, endBy)
+import Text.Parsec.Char (char)
+import Utils.Parsec (digits)
 
 apply :: (String -> String) -> IO ()
 apply = evaluate "solutions/2023/day4/input"
@@ -19,31 +20,15 @@ card :: Parser Card
 card = do
   _ <- string "Card"
   spaces
-  n <- read <$> many1 digit
+  n <- read <$> digits
   _ <- char ':'
   spaces
-  xs <- map read <$> endBy (many1 digit) (many1 space)
+  xs <- map read <$> endBy digits spaces
   _ <- char '|'
   spaces
-  ys <- map read <$> sepBy (many1 digit) (many1 space)
+  ys <- map read <$> sepBy digits spaces
   eof
   return (Card n xs ys)
-
-test :: Parser [Int]
-test = do
-  xs <- map read <$> endBy (many1 digit) (many1 space)
-  --_ <- space
-  _ <- char '|'
-  --_ <- string " x"
-  return xs
-
-test2 :: Parser [Int]
-test2 = do
-  xs <- map read <$> sepBy (many1 digit) (many1 space)
-  _ <- space
-  _ <- char '|'
-  --_ <- string " x"
-  return xs
 
 wins :: Card -> Int
 wins (Card _ xs ys) = length $ filter (`elem` xs) ys

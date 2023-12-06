@@ -10,7 +10,7 @@ import Control.Monad (void)
 parseF :: Parser a -> String -> a
 parseF p s = case parse p "" s of
   Right val -> val
-  Left  err -> error $ show err
+  Left  err -> errorWithoutStackTrace $ show err
 
 sepByN :: Int -> Parser a -> Parser b -> Parser [a]
 sepByN 0 _ _   = return []
@@ -19,17 +19,14 @@ sepByN n p sep = do
   xs <- count (n - 1) (sep >> p)
   return (x:xs)
 
-sepBy2 :: Parser a -> Parser b -> Parser [a]
-sepBy2 p sep = concat <$> many (try pair <|> end <|> one)
-  where pair = do { x <- p; _ <- sep; y <- p; return [x, y] }
-        end = (:[]) <$> (sep >> p)
-        one = (:[]) <$> p
-
-sepBy1Safe :: Parser a -> Parser b -> Parser [a]
-sepBy1Safe p sep = do
+sepBy1 :: Parser a -> Parser b -> Parser [a]
+sepBy1 p sep = do
   x <- p
-  xs <- many (try (p >> sep >> p) <|> (sep >> p))
+  xs <- many (try (sep >> p))
   return (x:xs)
+
+sepBy :: Parser a -> Parser b -> Parser [a]
+sepBy p sep = sepBy1 p sep <|> return []
 
 digits :: Parser String
 digits = many1 digit

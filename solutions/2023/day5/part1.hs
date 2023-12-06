@@ -2,6 +2,7 @@
 
 import Day
 import Data.Maybe (mapMaybe, listToMaybe, fromMaybe)
+import Utils.Parsec (parseF)
 
 inMap :: Int -> Map -> Maybe Int
 inMap x m | y <- x - source m, y >= 0 && y < size m = Just $ destination m + y
@@ -17,7 +18,7 @@ locations :: Almanac -> [Int]
 locations (Almanac seeds cs) = map (location cs) seeds
 
 solution :: String -> String
-solution = show . minimum . locations . parseInput
+solution = show . minimum . locations . parseF almanacP
 
 main :: IO ()
 main = apply solution

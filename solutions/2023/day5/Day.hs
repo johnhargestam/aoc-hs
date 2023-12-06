@@ -4,9 +4,9 @@ module Day where
 
 import Aoc (evaluate)
 import Text.Parsec.String (Parser)
-import Text.Parsec (endBy1, eof, sepBy1)
+import Text.Parsec (eof)
 import Text.Parsec.Char (newline)
-import Utils.Parsec (sepByN, space, digits, letters, parseF, string)
+import Utils.Parsec (sepByN, space, digits, letters, string, sepBy1)
 
 apply :: (String -> String) -> IO ()
 apply = evaluate "solutions/2023/day5/input"
@@ -37,16 +37,11 @@ converterP = do
   ms <- sepBy1 mapP newline
   return (Converter {from = f, to = t, maps = ms})
 
-
-
 almanacP ::  Parser Almanac
 almanacP = do
   string "seeds: "
   s <- map read <$> sepBy1 digits space
   string "\n\n"
-  cs <- endBy1 converterP newline
+  cs <- sepBy1 converterP (string "\n\n")
   eof
   return (Almanac {seeds = s, converters = cs})
-
-parseInput :: String -> Almanac
-parseInput = parseF almanacP . (++"\n\n")

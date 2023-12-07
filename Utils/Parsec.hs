@@ -34,8 +34,8 @@ digits = many1 digit
 letters :: Parser String
 letters = many1 letter
 
-space :: Parser Char
-space = char ' '
+space :: Parser ()
+space = void (char ' ')
 
 spaces :: Parser ()
 spaces = void (many1 space)

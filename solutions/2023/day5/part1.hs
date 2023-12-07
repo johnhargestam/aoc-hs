@@ -2,23 +2,27 @@
 
 import Day
 import Data.Maybe (mapMaybe, listToMaybe, fromMaybe)
-import Utils.Parsec (parseF)
+import Utils.Parsec (parseF, space, digits, sepBy1)
+import Text.Parsec.String (Parser)
 
-inMap :: Int -> Map -> Maybe Int
-inMap x m | y <- x - source m, y >= 0 && y < size m = Just $ destination m + y
-          | otherwise = Nothing
+mapInt :: Int -> Map -> Maybe Int
+mapInt x m | diff <- x - source m, diff >= 0 && diff < len m = Just $ destination m + diff
+           | otherwise = Nothing
 
-convert :: Int -> Converter -> Int
-convert x c = fromMaybe x . listToMaybe $ mapMaybe (x `inMap`) $ maps c
+convertInt :: Int -> Converter -> Int
+convertInt x c = fromMaybe x . listToMaybe $ mapMaybe (mapInt x) $ maps c
 
 location :: [Converter] -> Int -> Int
-location = flip $ foldl convert
+location = flip $ foldl convertInt
 
-locations :: Almanac -> [Int]
+locations :: Almanac Int -> [Int]
 locations (Almanac seeds cs) = map (location cs) seeds
 
+seedsP :: Parser [Int]
+seedsP = map read <$> sepBy1 digits space
+
 solution :: String -> String
-solution = show . minimum . locations . parseF almanacP
+solution = show . minimum . locations . parseF (almanacP seedsP)
 
 main :: IO ()
 main = apply solution

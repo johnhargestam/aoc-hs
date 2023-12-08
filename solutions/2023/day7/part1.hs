@@ -2,32 +2,9 @@
 
 import Day
 import Data.Char (digitToInt)
-import Data.List (group, sort, sortBy)
-import Utils.List (descending)
-import Text.Parsec.String (Parser)
-import Text.Parsec (count, oneOf)
-import Utils.Parsec (parseF, space, digits, newline, sepBy1)
 import Data.Ord (comparing)
-import Distribution.Simple.Utils (equating)
-
-data Hand = Hand { cards :: [Char], bid :: Int }
-  deriving Show
-
-handP :: Parser Hand
-handP = do
-  cs <- count 5 (oneOf "AKQJT98765432")
-  space
-  b <- read <$> digits
-  return (Hand cs b)
-
-handsP :: Parser [Hand]
-handsP = sepBy1 handP newline
-
-instance Eq Hand where
-  (==) = equating cardStrengths
-
-instance Ord Hand where
-  compare = comparing handStrength <> comparing cardStrengths  
+import Utils.Parsec (parseF)
+import Data.List (sortBy)
 
 cardStrength :: Char -> Int
 cardStrength 'A' = 14
@@ -40,11 +17,8 @@ cardStrength  n  = digitToInt n
 cardStrengths :: Hand -> [Int]
 cardStrengths = map cardStrength . cards
 
-kinds :: Ord a => [a] -> [Int]
-kinds = sortBy descending . map length . group . sort
-
 handStrength :: Hand -> Int
-handStrength (Hand cs _) = case kinds cs of
+handStrength h = case sortedKinds $ cards h of
  [5]       -> 6
  [4,1]     -> 5
  [3,2]     -> 4
@@ -53,11 +27,11 @@ handStrength (Hand cs _) = case kinds cs of
  [2,1,1,1] -> 1
  _         -> 0
 
-winnings :: [Hand] -> [Int]
-winnings = zipWith (*) [1..] . map bid . sort
+rank :: [Hand] -> [Hand]
+rank = sortBy (comparing handStrength <> comparing cardStrengths)
 
 solution :: String -> String
-solution = show . sum . winnings . parseF handsP
+solution = show . sum . winnings . rank . parseF handsP
 
 main :: IO ()
 main = apply solution

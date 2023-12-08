@@ -51,3 +51,8 @@ lastMaybe xs = Just $ last xs
 
 mapWithIndex :: (Int -> a -> b) -> [a] -> [b]
 mapWithIndex f = zipWith f [0..]
+
+countWhile :: (a -> Bool) -> [a] -> Int
+countWhile p = go 0
+  where go !n (x:xs) | p x = go (n+1) xs
+        go !n _            = n

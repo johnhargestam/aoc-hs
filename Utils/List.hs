@@ -56,3 +56,9 @@ countWhile :: (a -> Bool) -> [a] -> Int
 countWhile p = go 0
   where go !n (x:xs) | p x = go (n+1) xs
         go !n _            = n
+
+interleave :: [a] -> [a] -> [a]
+interleave (x:xs) (y:ys) = x : y : interleave xs ys
+interleave (x:xs) []     = x : interleave xs []
+interleave []     (y:ys) = y : interleave [] ys
+interleave []     []     = []

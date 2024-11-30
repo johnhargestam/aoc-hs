@@ -12,4 +12,4 @@ if [ ! -d $dir ]; then
        -o "$dir/input"
 fi
 
-ghci $dir/part$3.hs -i$dir
+ghci $dir/part$3.hs -i$dir -XBangPatterns

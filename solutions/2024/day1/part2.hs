@@ -6,9 +6,9 @@ count :: (a -> Bool) -> [a] -> Int
 count p = length . filter p
 
 scores :: ([Int], [Int]) -> [Int]
-scores (xs, ys) = foldr f [] xs
-    where
-        f x sums = (x * count (x ==) ys) : sums
+scores (xs, ys) = map f xs
+  where
+    f x = x * count (x ==) ys
 
 solution :: String -> String
 solution = show . sum . scores . unzip . parseLines

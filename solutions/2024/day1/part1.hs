@@ -2,18 +2,6 @@
 
 import Data.List (sort)
 import Day
-import Text.Parsec.String (Parser)
-import Utils.Parsec (digits, parseF, spaces)
-
-locationsP :: Parser (Int, Int)
-locationsP = do
-        n <- digits
-        spaces
-        m <- digits
-        return (read n, read m)
-
-parseLines :: String -> [(Int, Int)]
-parseLines = map (parseF locationsP) . lines
 
 mapBoth :: (a -> b) -> (a, a) -> (b, b)
 mapBoth f (x, y) = (f x, f y)

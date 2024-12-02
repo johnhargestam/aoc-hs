@@ -2,42 +2,43 @@
 
 module Utils.List where
 
-import Data.List (tails, findIndex, isPrefixOf, find)
-import Data.Ord
+import Data.List (find, findIndex, isPrefixOf, tails)
 import Data.Maybe (fromMaybe)
+import Data.Ord
 
 findTailIndex :: ([a] -> Bool) -> [a] -> Maybe Int
 findTailIndex f ys = findIndex f (tails ys)
 
-findListIndex :: Eq a => [a] -> [a] -> Maybe Int
+findListIndex :: (Eq a) => [a] -> [a] -> Maybe Int
 findListIndex xs = findTailIndex (xs `isPrefixOf`)
 
-splitEq :: Eq a => [a] -> [a] -> [[a]]
-splitEq _  [] = []
+splitEq :: (Eq a) => [a] -> [a] -> [[a]]
+splitEq _ [] = []
 splitEq [] xs = [xs]
 splitEq ms xs = case findListIndex ms xs of
   (Just i) -> take i xs : splitEq ms (drop (i + length ms) xs)
   Nothing -> [xs]
 
-descending :: Ord a => a -> a -> Ordering
+descending :: (Ord a) => a -> a -> Ordering
 descending = comparing Down
 
 singleMaybe :: [a] -> Maybe a
 singleMaybe [x] = Just x
-singleMaybe  _  = Nothing
+singleMaybe _ = Nothing
 
 chunksOf :: Int -> [a] -> [[a]]
-chunksOf _ []         = []
+chunksOf _ [] = []
 chunksOf n xs
-     | length xs >= n = take n xs : chunksOf n (drop n xs)
-     | otherwise      = [xs]
+  | length xs >= n = take n xs : chunksOf n (drop n xs)
+  | otherwise = [xs]
 
 sieve :: Int -> [b] -> [b]
 sieve n = map head . takeWhile (not . null) . iterate (drop n)
 
 replace :: Int -> a -> [a] -> [a]
 replace i x xs = ys ++ [x] ++ drop 1 zs
-  where (ys,zs) = splitAt i xs
+ where
+  (ys, zs) = splitAt i xs
 
 mapAdjacent :: (a -> a -> b) -> [a] -> [b]
 mapAdjacent f xs = zipWith f xs $ tail xs
@@ -50,15 +51,19 @@ lastMaybe [] = Nothing
 lastMaybe xs = Just $ last xs
 
 mapWithIndex :: (Int -> a -> b) -> [a] -> [b]
-mapWithIndex f = zipWith f [0..]
+mapWithIndex f = zipWith f [0 ..]
+
+count :: (a -> Bool) -> [a] -> Int
+count p = length . filter p
 
 countWhile :: (a -> Bool) -> [a] -> Int
 countWhile p = go 0
-  where go !n (x:xs) | p x = go (n+1) xs
-        go !n _            = n
+ where
+  go !n (x : xs) | p x = go (n + 1) xs
+  go !n _ = n
 
 interleave :: [a] -> [a] -> [a]
-interleave (x:xs) (y:ys) = x : y : interleave xs ys
-interleave (x:xs) []     = x : interleave xs []
-interleave []     (y:ys) = y : interleave [] ys
-interleave []     []     = []
+interleave (x : xs) (y : ys) = x : y : interleave xs ys
+interleave (x : xs) [] = x : interleave xs []
+interleave [] (y : ys) = y : interleave [] ys
+interleave [] [] = []
